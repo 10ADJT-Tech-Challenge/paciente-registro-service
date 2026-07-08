@@ -1,0 +1,16 @@
+FROM postgres:16
+
+# Instala dependências necessárias para adicionar repositórios externos
+RUN apt-get update && apt-get install -y \
+    gnupg \
+    apt-transport-https \
+    lsb-release \
+    wget
+
+# Adiciona a chave GPG e o repositório oficial da Timescale
+RUN wget --quiet -O - https://packagecloud.io/timescale/timescaledb/gpgkey | gpg --dearmor -o /etc/apt/trusted.gpg.d/timescaledb.gpg \
+    && echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -c -s) main" > /etc/apt/sources.list.d/timescaledb.list
+
+# Instala o pacote do TimescaleDB específico para o Postgres 16 e limpa o cache para reduzir o tamanho da imagem
+RUN apt-get update && apt-get install -y timescaledb-2-postgresql-16 \
+    && rm -rf /var/lib/apt/lists/*

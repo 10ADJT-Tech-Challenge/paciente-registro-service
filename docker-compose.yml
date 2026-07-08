@@ -1,0 +1,19 @@
+services:
+  db:
+    build:
+      context: ./src/main/resources/db/.
+      dockerfile: Dockerfile-bd
+    container_name: postgres-custom-timescale
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    # REGRA DE OURO: A extensão precisa ser pré-carregada na inicialização do serviço
+    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
+    volumes:
+      - pg_custom_data:/var/lib/postgresql/data
+
+volumes:
+  pg_custom_data:
