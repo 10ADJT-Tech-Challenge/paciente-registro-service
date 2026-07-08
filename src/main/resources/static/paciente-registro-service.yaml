@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: paciente-registro-service API
+  description: API responsável por receber os registros diários de medições vitais dos pacientes e avaliar riscos clínicos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Servidor Local (MVP)
+paths:
+  /api/v1/registros:
+    post:
+      summary: Cadastra uma nova medição de sinal vital
+      description: Recebe o valor quantitativo de um sinal vital (ex. pressão, glicose) do paciente. Avalia a medição e, se identificar variação perigosa baseada no setup, enfileira um registro grave na mensageria do sistema.
+      operationId: criarRegistroMedicao
+      tags:
+        - Registros Diarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistroRequest'
+      responses:
+        '201':
+          description: Medição registrada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistroResponse'
+        '400':
+          description: Requisição inválida (ex. valores faltando ou em formato incorreto).
+components:
+  schemas:
+    RegistroRequest:
+      type: object
+      required:
+        - cpf_paciente
+        - id_evento
+        - valor_medicao
+        - origem_registro
+      properties:
+        cpf_paciente:
+          type: string
+          description: CPF do paciente idoso para vinculação do registro.
+          example: "12345678900"
+        id_evento:
+          type: string
+          format: uuid
+          description: Identificador do evento de sinal vital (referência do catálogo base).
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        valor_medicao:
+          type: number
+          format: float
+          description: O valor estrito e quantitativo aferido.
+          example: 12.5
+        origem_registro:
+          type: string
+          description: A origem do dado, preparando a arquitetura para dispositivos IoT.
+          enum:
+            - MANUAL
+            - MEDIDOR_AUTOMATICO
+          example: "MANUAL"
+    RegistroResponse:
+      type: object
+      properties:
+        id_registro:
+          type: string
+          format: uuid
+          description: Identificador único do registro gerado no banco de dados.
+          example: "a1b2c3d4-e5f6-7890-1234-56789abcdef0"
+        mensagem:
+          type: string
+          example: "Registro salvo com sucesso."
+        status_alerta:
+          type: string
+          description: Indica a inteligência do sistema. Retorna se a medição gerou um alerta na fila de mensageria.
+          enum:
+            - NORMAL
+            - ALERTA_ENFILEIRADO
+          example: "NORMAL"

@@ -67,6 +67,16 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -115,6 +125,33 @@
                                     <artifactId>lombok</artifactId>
                                 </path>
                             </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.21.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>./src/main/resources/static/paciente-registro-service.yaml</inputSpec>
+                            <apiPackage>com.adjt.pacienteregistroservice.dto.generated</apiPackage>
+                            <modelPackage>com.adjt.pacienteregistroservice.dto.generated.model</modelPackage>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe> <dateLibrary>java8</dateLibrary>
+                                <basePackage>com.adjt.pacienteregistroservice</basePackage>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

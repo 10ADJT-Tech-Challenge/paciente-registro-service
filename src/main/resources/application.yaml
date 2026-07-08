@@ -16,3 +16,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+springdoc:
+  api-docs:
+    path: /v1/api-docs
+  swagger-ui:
+    path: /v1/swagger-ui.html
+    url: /paciente-registro-service.yaml
