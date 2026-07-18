@@ -71,10 +71,3 @@ components:
         mensagem:
           type: string
           example: "Registro salvo com sucesso."
-        status_alerta:
-          type: string
-          description: Indica a inteligência do sistema. Retorna se a medição gerou um alerta na fila de mensageria.
-          enum:
-            - NORMAL
-            - ALERTA_ENFILEIRADO
-          example: "NORMAL"

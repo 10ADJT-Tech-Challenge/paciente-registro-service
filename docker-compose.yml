@@ -14,6 +14,14 @@ services:
     command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     volumes:
       - pg_custom_data:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"   # Porta de comunicação das APIs (backend)
+      - "15672:15672" # Porta da interface visual para os jurados
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
 
 volumes:
   pg_custom_data:

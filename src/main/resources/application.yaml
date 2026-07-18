@@ -8,6 +8,12 @@ spring:
     password: ${DB_PASSWORD:senha_padrao}
     driver-class-name: org.postgresql.Driver
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:admin}
+    password: ${RABBITMQ_PASSWORD:secret}
+
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -23,3 +29,11 @@ springdoc:
   swagger-ui:
     path: /v1/swagger-ui.html
     url: /paciente-registro-service.yaml
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [traceId=%X{traceId}] - %msg%n"
+  level:
+    com:
+      adjt:
+        pacienteregistroservice: INFO
