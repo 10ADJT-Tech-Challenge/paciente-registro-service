@@ -4,6 +4,7 @@ import com.adjt.pacienteregistroservice.dto.MedicaoRealizadaEvent;
 import com.adjt.pacienteregistroservice.dto.generated.model.RegistroRequest;
 import com.adjt.pacienteregistroservice.dto.generated.model.RegistroResponse;
 import com.adjt.pacienteregistroservice.entity.RegistroMedicao;
+import com.adjt.pacienteregistroservice.messaging.publisher.MedicaoPublisher;
 import com.adjt.pacienteregistroservice.persistence.RegistroMedicaoRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,11 @@ import java.util.UUID;
 public class RegistroMedicaoService {
 
     private final RegistroMedicaoRepository repository;
-    private final MedicaoPublisherService medicaoPublisherService;
+    private final MedicaoPublisher medicaoPublisher;
 
-    public RegistroMedicaoService(RegistroMedicaoRepository repository, MedicaoPublisherService medicaoPublisherService) {
+    public RegistroMedicaoService(RegistroMedicaoRepository repository, MedicaoPublisher medicaoPublisher) {
         this.repository = repository;
-        this.medicaoPublisherService = medicaoPublisherService;
+        this.medicaoPublisher = medicaoPublisher;
     }
 
     public RegistroResponse criarRegistroMedicao(RegistroRequest request) {
@@ -44,7 +45,7 @@ public class RegistroMedicaoService {
     }
 
     private void notificaEventoRegistro(RegistroMedicao registroMedicao) {
-        medicaoPublisherService.enviarEventoDeMedicao(new MedicaoRealizadaEvent(
+        medicaoPublisher.enviarEventoDeMedicao(new MedicaoRealizadaEvent(
                 registroMedicao.getId(),
                 registroMedicao.getCpfPaciente(),
                 registroMedicao.getIdEvento(),

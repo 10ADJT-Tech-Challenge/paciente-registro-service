@@ -1,4 +1,4 @@
-package com.adjt.pacienteregistroservice.service;
+package com.adjt.pacienteregistroservice.messaging.publisher;
 
 import com.adjt.pacienteregistroservice.dto.MedicaoRealizadaEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +9,12 @@ import static com.adjt.pacienteregistroservice.configuration.RabbitMQConfig.EXCH
 
 @Slf4j
 @Service
-public class MedicaoPublisherService {
+public class MedicaoPublisher {
     private final RabbitTemplate rabbitTemplate;
 
     private static final String ROUTING_KEY = "medicao.realizada";
 
-    public MedicaoPublisherService(RabbitTemplate rabbitTemplate) {
+    public MedicaoPublisher(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
