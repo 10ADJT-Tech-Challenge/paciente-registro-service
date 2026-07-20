@@ -22,11 +22,11 @@ O serviço é configurado através de variáveis de ambiente. Você pode criar u
 
 As principais variáveis são:
 
-* `DB_HOST`: Host do banco de dados PostgreSQL.
-* `DB_PORT`: Porta do banco de dados PostgreSQL.
-* `DB_NAME`: Nome do banco de dados.
-* `DB_USER`: Usuário do banco de dados.
-* `DB_PASSWORD`: Senha do banco de dados.
+* `DB_HOST_PACIENTE_REGISTRO`: Host do banco de dados PostgreSQL.
+* `DB_PORT_PACIENTE_REGISTRO`: Porta do banco de dados PostgreSQL.
+* `DB_NAME_PACIENTE_REGISTRO`: Nome do banco de dados.
+* `DB_USER_PACIENTE_REGISTRO`: Usuário do banco de dados.
+* `DB_PASSWORD_PACIENTE_REGISTRO`: Senha do banco de dados.
 * `RABBITMQ_HOST`: Host do RabbitMQ.
 * `RABBITMQ_PORT`: Porta do RabbitMQ.
 * `RABBITMQ_USER`: Usuário do RabbitMQ.

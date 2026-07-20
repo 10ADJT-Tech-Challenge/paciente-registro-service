@@ -1,11 +1,14 @@
+server:
+  port: 8081 # trocar por property de ambiente
+
 spring:
   application:
     name: paciente-registro-service
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:paciente-registro-service}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:senha_padrao}
+    url: jdbc:postgresql://${DB_HOST_PACIENTE_REGISTRO:localhost}:${DB_PORT_PACIENTE_REGISTRO:5432}/${DB_NAME_PACIENTE_REGISTRO:paciente-registro-service}
+    username: ${DB_USER_PACIENTE_REGISTRO:postgres}
+    password: ${DB_PASSWORD_PACIENTE_REGISTRO:senha_padrao}
     driver-class-name: org.postgresql.Driver
 
   rabbitmq:
